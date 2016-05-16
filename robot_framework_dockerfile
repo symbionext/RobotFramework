@@ -1,0 +1,44 @@
+FROM debian
+
+#RIDE installation require python-wxgtk2.8 some could be installed from wheezy repo
+RUN echo "deb http://ftp.seclan.com/debian/ wheezy main" >> /etc/apt/sources.list && \
+    echo "deb-src http://ftp.seclan.com/debian/ wheezy main" >> /etc/apt/sources.list
+
+#APT repos update
+RUN apt-get update
+
+#SSH server installation and X11 forwarding possible:
+RUN apt-get install -y --no-install-recommends openssh-server xauth
+EXPOSE 22
+#openssh-server require folder /var/run/sshd
+RUN mkdir -pv /var/run/sshd
+
+# Java installation so cointainer could work as Jenkins slave: https://wiki.jenkins-ci.org/display/JENKINS/Docker+Plugin
+RUN apt-get install -y --no-install-recommends openjdk-7-jre
+
+#SSH server user: 
+RUN useradd -m -d /home/sshuser -s /bin/bash -U sshuser
+RUN echo 'sshuser:sshuserpw' | chpasswd
+# NOTE: <In future development user should be added in runtime as script> 
+#       ...same way than in docker-entrypoint.sh do in https://hub.docker.com/_/postgres/ 
+#       ...also run time added keybased auth should be supported
+
+#Python installation:
+RUN apt-get install -y --no-install-recommends python2.7
+#Python pip installation:
+RUN apt-get install -y --no-install-recommends python-pip
+
+##Robot framework installation:
+RUN pip install robotframework
+
+##Ride installation:
+#Require python-wxgtk2.8
+RUN apt-get install -y --no-install-recommends python-wxgtk2.8
+RUN pip install robotframework-ride
+
+##SSH library installation:
+#SSH library require python-pycryptopp python-paramiko
+RUN apt-get install -y --no-install-recommends python-pycryptopp python-paramiko
+RUN pip install robotframework-sshlibrary
+
+ENTRYPOINT ["/usr/sbin/sshd", "-D"]
