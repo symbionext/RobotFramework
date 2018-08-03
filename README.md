@@ -1,6 +1,6 @@
 # Dockerize a RobotFramework
 
-Main focus of this project is to get Robot Framework http://robotframework.org/ , needed libraryes https://github.com/robotframework , Jenkins-slave tools https://wiki.jenkins-ci.org/display/JENKINS/Docker+Plugin and RIDE https://github.com/robotframework/RIDE to be dockerized.<br>
+Main focus of this project is to get Robot Framework http://robotframework.org/ , needed libraries https://github.com/robotframework , Jenkins-slave tools https://wiki.jenkins-ci.org/display/JENKINS/Docker+Plugin and RIDE https://github.com/robotframework/RIDE to be dockerized.<br>
 Long time focus is get official Robot Framework base image to docker hub https://hub.docker.com/explore/ and based tools/libraryes & development images to Robot Framework base image (more info in "Enhancements to existing implementation"). 
 Contributing of this project should follow guidlines that are defined in here https://github.com/docker-library/official-images
 
